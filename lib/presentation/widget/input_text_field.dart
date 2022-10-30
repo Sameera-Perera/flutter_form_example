@@ -28,7 +28,7 @@ class InputTextField extends StatefulWidget {
       this.obscureText = false,
       this.textAlign = TextAlign.left,
       this.onEditComplete,
-      this.textInputAction = TextInputAction.next})
+      this.textInputAction = TextInputAction.go})
       : super(key: key);
 
   @override
@@ -46,72 +46,70 @@ class _InputTextFieldState extends State<InputTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 45,
-      child: TextFormField(
-        textDirection: TextDirection.ltr,
-        controller: widget.textEditingController,
-        initialValue: widget.initialValue,
-        validator: widget.validation ??
-            (val) {
-              return null;
-            },
-        keyboardType: widget.textInputType,
-        inputFormatters: widget.inputFormatters,
-        textInputAction: widget.textInputAction,
-        enabled: widget.enable,
-        onChanged: (val) {
-          if (widget.onChange != null) {
-            widget.onChange!(val);
-          }
-        },
-        onEditingComplete: widget.onEditComplete,
-        obscureText: _isVisible,
-        style:
-            const TextStyle(fontSize: 12.0, height: 2.0, color: Colors.black),
-        textAlign: widget.textAlign,
-        decoration: InputDecoration(
-            hintText: widget.hint,
-            suffixIcon: widget.obscureText
-                ? GestureDetector(
-                    child: _isVisible
-                        ? const Icon(
-                            Icons.visibility_off,
-                            size: 18,
-                            color: Colors.grey,
-                          )
-                        : const Icon(
-                            Icons.visibility,
-                            size: 18,
-                            color: Colors.grey,
-                          ),
-                    onTap: () => setState(() {
-                      _isVisible = !_isVisible;
-                    }),
-                  )
-                : null,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-            filled: !widget.enable,
-            fillColor: Colors.grey.shade100,
-            hintStyle:
-                const TextStyle(fontWeight: FontWeight.w300, fontSize: 11),
-            border: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              borderSide: BorderSide(width: 1, color: Colors.grey.shade300),
+    return TextFormField(
+      textDirection: TextDirection.ltr,
+      controller: widget.textEditingController,
+      initialValue: widget.initialValue,
+      validator: widget.validation ??
+              (val) {
+            return null;
+          },
+      keyboardType: widget.textInputType,
+      inputFormatters: widget.inputFormatters,
+      textInputAction: widget.textInputAction,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      enabled: widget.enable,
+      onChanged: (val) {
+        if (widget.onChange != null) {
+          widget.onChange!(val);
+        }
+      },
+      onEditingComplete: widget.onEditComplete,
+      obscureText: _isVisible,
+      style:
+      const TextStyle(fontSize: 12.0, height: 2.0, color: Colors.black),
+      textAlign: widget.textAlign,
+      decoration: InputDecoration(
+          hintText: widget.hint,
+          suffixIcon: widget.obscureText
+              ? GestureDetector(
+            child: _isVisible
+                ? const Icon(
+              Icons.visibility_off,
+              size: 18,
+              color: Colors.grey,
+            )
+                : const Icon(
+              Icons.visibility,
+              size: 18,
+              color: Colors.grey,
             ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              borderSide: BorderSide(width: 1, color: Colors.grey.shade300),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              borderSide: BorderSide(width: 1, color: Colors.grey.shade300),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              borderSide: BorderSide(width: 1, color: Colors.grey.shade300),
-            )),
-      ),
+            onTap: () => setState(() {
+              _isVisible = !_isVisible;
+            }),
+          )
+              : null,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+          filled: !widget.enable,
+          fillColor: Colors.grey.shade100,
+          hintStyle:
+          const TextStyle(fontWeight: FontWeight.w300, fontSize: 11),
+          border: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+            borderSide: BorderSide(width: 1, color: Colors.grey.shade300),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+            borderSide: BorderSide(width: 1, color: Colors.grey.shade300),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+            borderSide: BorderSide(width: 1, color: Colors.grey.shade300),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+            borderSide: BorderSide(width: 1, color: Colors.grey.shade300),
+          )),
     );
   }
 }
